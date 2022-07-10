@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .tasks import test_func, add
+from core.periodic_task import some_task
 # from celery import  
-# from .read_excel import cele_test
+from .read_excel import cele_test
 from django.views.generic.edit import FormView
 from core.forms import FeedbackForm
 
@@ -17,10 +18,11 @@ class FeedbackView(FormView):
 
 
 import pandas as pd 
-from celery import shared_task
+
 
 def test(request):
-    # cele_test.delay()
-    add.delay(7,8)
-    
+    # acct = pd.read_excel(r'/var/www/html/emmy/Read_excel_file/core/store/account_details.xlsx',  usecols=['Numbers'])
+    # cele_test().delay(acct)
+    # add().delay(7,8)
+    some_task.delay()    
     return HttpResponse("Done")
