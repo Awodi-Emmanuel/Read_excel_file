@@ -10,10 +10,19 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+
+# CELERY SETTINGS
+
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = 'Africa/Lagos'
+
+# CELERY_BEAT SETTINGS
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 from pathlib import Path
 
@@ -46,6 +55,7 @@ INSTALLED_APPS = [
     'core',
     'rest_framework',
     'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -149,3 +159,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # export DJANGO_SETTINGS_MODULE=mysite.settings
+# export DJANGO_SETTINGS_MODULE=ReadExcel.settings

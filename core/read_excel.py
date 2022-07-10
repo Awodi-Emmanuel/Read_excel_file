@@ -1,17 +1,27 @@
-from stringprep import in_table_a1
+from django.http import HttpResponse
+from django.shortcuts import render
+# from core.tasks import test_func
+# from celery import shared_task
+
 import pandas as pd 
 from celery import shared_task
+# import os
 
-@shared_task
-def my_celery(request):
-    
-    f = pd.read_excel(r'store/account_details.xlsx',  usecols=['Numbers'])
+
+
+# def my_celery():
+#     test_func.delay()
+#     f = pd.read_excel(r'store/account_details.xlsx',  usecols=['Numbers'])
+#     print(f)
+#     add_money = 50
+
+#     for num in f.values:
+#         print(num[0], '=', add_money)
+@shared_task(bind=True)
+def cele_test(n):
     add_money = 50
-
-    for num in f.values:
-        f.delay()
+    for num in n.values:
         print(num[0], '=', add_money)
     
-    return "Done" 
-
-                
+cele_test(n = pd.read_excel(r'store/account_details.xlsx',  usecols=['Numbers']))
+# cele_test(n = pd.read_excel(r'/var/www/html/emmy/Read_excel_file/core/store/account_details.xlsx',  usecols=['Numbers']))
