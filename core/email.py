@@ -11,7 +11,7 @@ def send_feedback_email(email, message):
     email_body = render_to_string('feedback/email/feedback_email_body.txt', c)
     
     email = EmailMessage(
-        email_subject, email, email,
+        email_subject, email_body, email,
         [settings.DEFAULT_FORM_EMAIL], [],
         headers={'Replace-To':email}
     )
