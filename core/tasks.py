@@ -12,20 +12,15 @@ def test_func(self):
 def add(x, y):
     return x + y
 
-# @shared_task
-# def mul(x, y):
-#     return x * y
+from celery.utils.log import get_task_logger
+from .emails import send_feedback_email
 
-# @shared_task
-# def xsum(number):
-#     return sum(number)
+logger = get_task_logger(__name__)
 
-# @shared_task
-# def count_widget():
-#     return Widget.objects.count()
+@shared_task(name="Send_feedback-email_task")
+def send_feedback_email_task(email, message):
+    """send an email when feedback form is filled successfully"""
+    logger.info("sent feedback email")
+    return send_feedback_email(email, message)
 
-# @shared_task
-# def rename_widget(widget_id, name):
-#     w = Widget.objects.get(id=widget_id)
-#     w.name = name
-#     w.save()
+    
